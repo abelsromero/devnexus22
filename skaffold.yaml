@@ -1,0 +1,26 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+build:
+  artifacts:
+    - image: devnexus
+      custom:
+        buildCommand: |
+          ./gradlew bootBuildImage --imageName="$IMAGE"
+        dependencies:
+          paths:
+            - src/main/**
+            - build.gradle
+            - settings.gradle
+  tagPolicy:
+    gitCommit: {}
+  local:
+    push: false
+deploy:
+  kubectl:
+    manifests:
+      - manifests/*.yaml
+portForward:
+  - resourceType: service
+    resourceName: devnexus-svc
+    namespace: devnexus
+    port: 8080
