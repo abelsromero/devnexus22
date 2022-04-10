@@ -8,8 +8,6 @@ plugins {
 group = 'org.devnexus'
 version = '0.0.1-SNAPSHOT'
 
-sourceCompatibility = 11
-
 repositories {
     mavenCentral()
 }
@@ -17,6 +15,7 @@ repositories {
 ext {
     asciidoctorjVersion = '2.5.3'
     asciidoctorjPdfVersion = '1.6.2'
+    jvmVersion = '17'
 }
 
 lombok {
@@ -30,6 +29,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of("$rootProject.ext.jvmVersion"))
+    }
+}
 
 test {
     useJUnitPlatform()
