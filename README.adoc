@@ -2,30 +2,29 @@
 :asciidoctor-docs-url: https://docs.asciidoctor.org/
 :toc: preamble
 :validation: You should be able to access the https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready[Actuator] endpoint http://localhost:8080/actuator.
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:status:
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
 
-This project shows how work with a containerized https://spring.io/projects/spring-boot[Spring Boot] service to convert documents with {asciidoctor-docs-url}asciidoctorj/latest[Asciidoctorj].
+Demo project Devenexus 22 talk https://devnexus.com/presentations/6947/[Java on Kubernetes: What I wish I knew first].
+It (aims to) shows how to obtain a good dev experience for Java on Kubernetes.
 
 == Requirements
 
 * https://www.docker.com/[Docker]
 * https://kind.sigs.k8s.io/[Kind]: to create a simplified local K8s cluster.
 * https://skaffold.dev/[Skaffold]: to automate, build, deploy and debugging, with life-reload.
-Debugging requires IntelliJ + https://plugins.jetbrains.com/plugin/8079-cloud-code[Cloud Code plugin].
-
-== Features
-
-=== Metrics
-// https://github.com/kubernetes-sigs/metrics-server/releases/download/metrics-server-helm-chart-3.8.2/components.yaml
-// kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
-Skaffold deployment adds https://github.com/kubernetes-sigs/metrics-server[metrics server] adapted for Kind.
-Once <<_skaffold,deployed>>, you can check the resources used by the pod with
-
- $ kubectl top pods
+Debugging requires IntelliJ https://plugins.jetbrains.com/plugin/8079-cloud-code[Cloud Code plugin].
 
 == Build & Deploy
 
-Note deploying in just Docker or local K8s requires the minimal setup, but also require more manual steps.
+WARNING: deploying in just Docker or local K8s requires the minimal setup, but also require more manual steps.
 And doesn't allow for life-reload and code debugging from IntelliJ.
 
 === Docker only
@@ -35,7 +34,7 @@ To run in plain Docker, build the image and run it.
  $ ./gradlew bootBuildImage
  $ docker run -it -p8080:8080 devnexus:0.0.1-SNAPSHOT
 
-=== Kubernetes only
+=== Kubernetes (from scratch)
 
 . Start a local Kind cluster
 
@@ -62,7 +61,7 @@ To validate it:
 [NOTE]
 ====
 Project contains a modified version of https://github.com/kubernetes-sigs/metrics-server/releases/download/metrics-server-helm-chart-3.8.2/components.yaml adding `--kubelet-insecure-tls`.
-Otherwise metrics-server pod won't start with error
+Without this change metrics-server pod won't start with error
 ----
 scraper.go:140] "Failed to scrape node" err="Get \"https://172.18.0.2:10250/metrics/resource\": x509: cannot validate certificate for 172.18.0.2 because it doesn't contain any IP SANs" node="kind-21-worker"
 ----
@@ -84,6 +83,17 @@ Create a `Cloud Code: Kubernetes` with the `Run > Edit Configurations` option, a
 
 You should see the app logs in the ID console and be able to add breakpoints and debug as any other Java app.
 
-== Running in minikube
+=== Running in minikube
 
   $ minikube start --kubernetes-version=v1.21.10
+
+== Features
+
+=== Metrics
+// https://github.com/kubernetes-sigs/metrics-server/releases/download/metrics-server-helm-chart-3.8.2/components.yaml
+// kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+Skaffold deployment adds https://github.com/kubernetes-sigs/metrics-server[metrics server] adapted for Kind.
+Once <<_skaffold,deployed>>, you can check the resources used by the pod with
+
+ $ kubectl top pods
