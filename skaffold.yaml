@@ -18,9 +18,16 @@ build:
 deploy:
   kubectl:
     manifests:
-      - manifests/*.yaml
+      - manifests/devnexus-app-deployment.yaml
 portForward:
   - resourceType: service
     resourceName: devnexus-svc
     namespace: devnexus
     port: 8080
+
+profiles:
+  - name: metrics
+    patches:
+      - op: add
+        path: /deploy/kubectl/manifests/-
+        value: manifests/metrics-server.yaml
