@@ -1,4 +1,4 @@
-= Spring Boot + K8s
+= Devnexus 22: 'Java on Kubernetes: What I wish I knew first' tools demo
 :asciidoctor-docs-url: https://docs.asciidoctor.org/
 :toc: preamble
 :validation: You should be able to access the https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready[Actuator] endpoint http://localhost:8080/actuator.
