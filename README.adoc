@@ -11,9 +11,17 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :warning-caption: :warning:
 endif::[]
+:twitter-uri: https://twitter.com
+:github-uri: https://github.com
 
-Demo project Devenexus 22 talk https://devnexus.com/presentations/6947/[Java on Kubernetes: What I wish I knew first].
-It (aims to) shows how to obtain a good dev experience for Java on Kubernetes.
+Demo for the second section of https://devnexus.com/presentations/6947/[Java on Kubernetes: What I wish I knew first] presented at Devnexus 2022.
+It shows how to obtain a good dev experience for Java on Kubernetes.
+For the whole presentation, see `presentation` dir.
+
+Authors:
+
+* Alberto C. Ríos: {twitter-uri}/albertoimpl[@albertoimpl] on Twitter, {github-uri}/Albertoimpl/[Albertoimpl] on GitHub
+* Abel Salgado Romero: {twitter-uri}/albertoimpl[@abelsromero] on Twitter, {github-uri}/Albertoimpl/[abelsromero] on GitHub
 
 == Requirements
 
